@@ -18,10 +18,12 @@ class Database:
         if self.connection:
             self.connection.close()
 
+class DatabaseDataFrame(Database):
+    def query(self, query):
+        return self.connection.execute(query).df()
 
-
-
-with Database(DATABASE_PATH) as db:
-    # queries 
-   query1 = db.query("SELECT * FROM information_schema.schemata;")
-   print(query1)
+if __name__ == "__main__":
+    with DatabaseDataFrame(DATABASE_PATH) as db:
+        # queries 
+        query1 = db.query("SELECT * FROM information_schema.schemata;")
+        print(query1)
